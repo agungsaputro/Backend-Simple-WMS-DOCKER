@@ -1,0 +1,29 @@
+version: "3.7"
+services:
+  mysql:
+    # nama container mysql
+    container_name: guesql
+    image: mysql:latest
+    environment:
+      - MYSQL_USER=user
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=backend_wms
+    ports:
+    # <Port exposed> : < MySQL Port running inside container>
+      - 3304:3306
+    networks:
+      - network1
+  backend_wms:
+    # nama container be nya
+    container_name:  container_be
+    image: 951119/be-docker:2.0
+    ports:
+    # <Port exposed> : < Port running inside container>
+      - 1002:3000
+    depends_on:
+      - mysql
+    networks:
+      - network1
+networks:
+  network1:
+    name: network1
